@@ -23,10 +23,13 @@ RUN rm -rf $APP_BASE && \
     chown www-data:www-data $APP_BASE/db $APP_BASE/packagefiles && \
     chown 0770 $APP_BASE/db $APP_BASE/packagefiles
 
+# Install supervisord
+RUN apt-get install -y --no-install-recommends supervisor
+COPY conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
 # Activate the nginx configuration
 RUN rm /etc/nginx/conf.d/default*.conf
 COPY conf/nuget.conf /etc/nginx/conf.d/ 
 
 # Start HHVM
-# TODO: Use supervisor or similar to have nginx AND hhvm active at all times
-CMD service hhvm start
+CMD ["supervisord", "-n"]
