@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 
-docker run --name nuget --rm -it -p 5005:80 nuget $@
+docker run --name nuget-server --rm -it -p 80:80 -e "NUGET_API_KEY=secret" simple-nuget-server $@
