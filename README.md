@@ -52,4 +52,9 @@ nuget setapikey -Source http://url.to/your/feed/ -ConfigFile NuGet.config
 ```
 
 This will create or update the `apikeys` section of your configuration file. Make sure to not check anything sensitive into source control.
+
 In both cases, if you omit the `-ConfigFile <file>` option, your user configuration file will be used.
+
+## License
+
+This project is licensed under the MIT license. See the `LICENSE` file for more information.
