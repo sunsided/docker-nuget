@@ -40,5 +40,8 @@ RUN echo $(date +%s | sha256sum | base64 | head -c 32; echo) > $APP_BASE/.api-ke
 COPY scripts/* /tmp/
 RUN chmod +x /tmp/*.sh
 
-# Start HHVM
+# Define the volumes
+VOLUME ["$APP_BASE/db", "$APP_BASE/packagefiles"]
+
+# Fire in the hole!
 CMD ["supervisord", "-n"]
