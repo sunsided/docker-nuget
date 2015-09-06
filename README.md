@@ -20,7 +20,7 @@ To run a container off the `simple-nuget-server` image, execute the following co
 docker run -d --name nuget-server -p 80:80 -e "NUGET_API_KEY=<your secret>" simple-nuget-server
 ```
 
-Note that some NuGet clients tend seem be picky about the port, so be sure to have your feed available on either port `80` or `443`, e.g. by having a reverse proxy in front on the container.
+Note that some NuGet clients might be picky about the port, so be sure to have your feed available on either port `80` or `443`, e.g. by having a reverse proxy in front on the container.
 
 ### Environment configuration
 
@@ -36,19 +36,19 @@ Note that some NuGet clients tend seem be picky about the port, so be sure to ha
 In order to push a package to your new NuGet feed, use the following command:
 
 ```bash
-nuget push -src http://url.to/your/feed -ApiKey <your secret> path/to/package.nupkg
+nuget push -src http://url.to/your/feed/ -ApiKey <your secret> path/to/package.nupkg
 ```
 
 You can add your feed to a specific `NuGet.config` file using:
 
 ```bash
-nuget sources add -Name "Your Feed's Name" -Source http://url.to/your/feed -ConfigFile NuGet.config
+nuget sources add -Name "Your Feed's Name" -Source http://url.to/your/feed/ -ConfigFile NuGet.config
 ```
 
 In order to store the API key in a specifig `NuGet.config` file you can use:
 
 ```bash
-nuget setapikey -Source http://url.to/your/feed -ConfigFile NuGet.config
+nuget setapikey -Source http://url.to/your/feed/ -ConfigFile NuGet.config
 ```
 
 This will create or update the `apikeys` section of your configuration file. Make sure to not check anything sensitive into source control.
