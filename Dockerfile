@@ -31,5 +31,14 @@ COPY conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 RUN rm /etc/nginx/conf.d/default*.conf
 COPY conf/nuget.conf /etc/nginx/conf.d/ 
 
+# Set randomly generated API key
+RUN echo $(date +%s | sha256sum | base64 | head -c 32; echo) > $APP_BASE/.api-key && \
+    echo "Auto-Generated NuGet API key: $(cat $APP_BASE/.api-key)" && \
+    sed -i $APP_BASE/inc/config.php -e "s/ChangeThisKey/$(cat $APP_BASE/.api-key)/"
+
+# Add the scripts
+COPY scripts/* /tmp/
+RUN chmod +x /tmp/*.sh
+
 # Start HHVM
 CMD ["supervisord", "-n"]
