@@ -14,11 +14,6 @@ RUN apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0x5a16e728
 	                                      php5-mysql php5-sqlite \
                                               supervisor
 
-# Install the supervisor configuration
-COPY conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY scripts/*.sh /tmp/
-RUN chmod +x /tmp/*.sh
-
 # Install git and clone the project
 RUN apt-get install -y --no-install-recommends git && \
     rm -rf $APP_BASE && \
@@ -31,6 +26,11 @@ RUN apt-get install -y --no-install-recommends git && \
 # Activate the nginx configuration
 RUN rm /etc/nginx/conf.d/default*.conf
 COPY conf/nuget.conf /etc/nginx/conf.d/ 
+
+# Install the supervisor configuration
+COPY conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY scripts/*.sh /tmp/
+RUN chmod +x /tmp/*.sh
 
 # Set randomly generated API key
 RUN echo $(date +%s | sha256sum | base64 | head -c 32; echo) > $APP_BASE/.api-key && \
