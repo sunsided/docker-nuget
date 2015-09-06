@@ -30,6 +30,7 @@ Note that some NuGet clients might be picky about the port, so be sure to have y
 
 * `/var/www/db` contains the SQLite database
 * `/var/www/packagefiles` contains uploaded the NuGet packages
+* `/var/cache/nginx` nginx' cache files
 
 ## NuGet configuration
 
