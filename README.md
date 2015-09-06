@@ -26,6 +26,11 @@ Note that some NuGet clients tend seem be picky about the port, so be sure to ha
 
 * `NUGET_API_KEY` sets the NuGet feed's API key to your own private key
 
+### Exported volumes
+
+* `/var/www/db` contains the SQLite database
+* `/var/www/packagefiles` contains uploaded the NuGet packages
+
 ## NuGet configuration
 
 In order to push a package to your new NuGet feed, use the following command:
@@ -46,4 +51,5 @@ In order to store the API key in a specifig `NuGet.config` file you can use:
 nuget setapikey -Source http://url.to/your/feed -ConfigFile NuGet.config
 ```
 
-Make sure to not check anything sensitive into source control. In both cases, if you omit the `-ConfigFile <file>` option, your user configuration file will be used.
+This will create or update the `apikeys` section of your configuration file. Make sure to not check anything sensitive into source control.
+In both cases, if you omit the `-ConfigFile <file>` option, your user configuration file will be used.
