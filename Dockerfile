@@ -16,7 +16,7 @@ RUN apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0x5a16e728
 
 # Install git and clone the project
 RUN rm -rf $APP_BASE
-COPY server/* $APP_BASE/
+COPY server $APP_BASE
 RUN rm -rf $APP_BASE/.git && \
     chown www-data:www-data $APP_BASE/db $APP_BASE/packagefiles && \
     chown 0770 $APP_BASE/db $APP_BASE/packagefiles
