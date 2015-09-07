@@ -1,6 +1,20 @@
-# NuGet Feed
+# Docker NuGet Feed
 
-This docker image provides a NuGet feed based on the [simple-nuget-server](https://github.com/Daniel15/simple-nuget-server/) project. It runs on top of the official [nginx](https://github.com/docker-library/docs/tree/master/nginx) image and uses [HHVM](http://hhvm.com) for PHP execution. [Supervisor](http://supervisord.org) is used for tracking the processes.
+This project provides a NuGet feed based on the [simple-nuget-server](https://github.com/Daniel15/simple-nuget-server/) project. It runs on top of the official [nginx](https://github.com/docker-library/docs/tree/master/nginx) image and uses [HHVM](http://hhvm.com) for PHP execution. [Supervisor](http://supervisord.org) is used for tracking the processes.
+
+The corresponding docker image is `sunside/simple-nuget-server` and can be found [here](https://hub.docker.com/r/sunside/simple-nuget-server/).
+
+## Quickstart
+
+```bash
+docker run --detach=true \
+           --publish 5000:80 \
+           --env NUGET_API_KEY=<your secret> \
+           --volume /srv/docker/nuget/database:/var/www/db \
+           --volume /srv/docker/nuget/packages:/var/www/packagefiles \
+           --name nuget-server \
+           sunside/simple-nuget-server
+```
 
 ## Building the image
 
@@ -17,7 +31,7 @@ At build time, a random API key is generated and printed out to the console. Not
 To run a container off the `simple-nuget-server` image, execute the following command:
 
 ```bash
-docker run -d --name nuget-server -p 80:80 -e "NUGET_API_KEY=<your secret>" simple-nuget-server
+docker run -d --name nuget-server -p 80:80 -e NUGET_API_KEY=<your secret> simple-nuget-server
 ```
 
 Note that some NuGet clients might be picky about the port, so be sure to have your feed available on either port `80` or `443`, e.g. by having a reverse proxy in front on the container.
