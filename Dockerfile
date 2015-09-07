@@ -32,6 +32,9 @@ COPY conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY scripts/*.sh /tmp/
 RUN chmod +x /tmp/*.sh
 
+# The base URL
+ENV BASE_URL /
+
 # Set randomly generated API key
 RUN echo $(date +%s | sha256sum | base64 | head -c 32; echo) > $APP_BASE/.api-key && \
     echo "Auto-Generated NuGet API key: $(cat $APP_BASE/.api-key)" && \

@@ -1,1 +1,4 @@
 *.swp
+NuGetAPIKey
+*.bak
+run.sh
