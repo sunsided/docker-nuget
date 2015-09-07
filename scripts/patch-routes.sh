@@ -7,6 +7,5 @@ else
 	echo "Using base URL: $BASE_URL"
 	sed -i /etc/nginx/conf.d/nuget.conf \
 		-e "s#rewrite \^/#rewrite ^$BASE_URL/#g" \
-		-e "s#location /#location $BASE_URL/#g" \
 		-e "s#location = /#location = $BASE_URL/#g"
 fi
