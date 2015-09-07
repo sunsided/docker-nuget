@@ -1,0 +1,4 @@
+[submodule "server"]
+	path = server
+	url = https://github.com/Daniel15/simple-nuget-server.git
+	branch = master
