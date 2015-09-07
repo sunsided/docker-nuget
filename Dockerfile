@@ -8,18 +8,16 @@ ENV HHVM_VERSION 3.9.1~$DEBIAN_VERSION
 
 # Install HHVM, Supervisor and PHP DBO connectors
 RUN apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0x5a16e7281be7a449 && \
-   echo deb http://dl.hhvm.com/debian $DEBIAN_VERSION main | tee /etc/apt/sources.list.d/hhvm.list && \
-   apt-get update && \
-   apt-get install -y --no-install-recommends hhvm=$HHVM_VERSION \
+    echo deb http://dl.hhvm.com/debian $DEBIAN_VERSION main | tee /etc/apt/sources.list.d/hhvm.list && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends hhvm=$HHVM_VERSION \
 	                                      php5-mysql php5-sqlite \
                                               supervisor
 
 # Install git and clone the project
-RUN apt-get install -y --no-install-recommends git && \
-    rm -rf $APP_BASE && \
-    git clone --depth 1 --single-branch -b $APP_BRANCH https://github.com/Daniel15/simple-nuget-server.git $APP_BASE && \
-    rm -rf $APP_BASE/.git && \
-    apt-get remove -y git && \
+RUN rm -rf $APP_BASE
+COPY server $APP_BASE
+RUN rm -rf $APP_BASE/.git && \
     chown www-data:www-data $APP_BASE/db $APP_BASE/packagefiles && \
     chown 0770 $APP_BASE/db $APP_BASE/packagefiles
 

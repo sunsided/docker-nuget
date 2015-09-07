@@ -1,4 +1,4 @@
-# Docker NuGet Feed
+# Docker NuGet Feed v0.2
 
 This project provides a NuGet feed based on the [simple-nuget-server](https://github.com/Daniel15/simple-nuget-server/) project. It runs on top of the official [nginx](https://github.com/docker-library/docs/tree/master/nginx) image and uses [HHVM](http://hhvm.com) for PHP execution. [Supervisor](http://supervisord.org) is used for tracking the processes.
 
@@ -28,10 +28,18 @@ At build time, a random API key is generated and printed out to the console. Not
 
 ## Running the image
 
+Make sure to have the submodule available by either cloning with `git clone --recursive` or executing
+
+```bash
+git submodule init
+git submodule update
+```
+
 To run a container off the `simple-nuget-server` image, execute the following command:
 
 ```bash
-docker run -d --name nuget-server -p 80:80 -e NUGET_API_KEY=<your secret> simple-nuget-server
+docker run -d --name nuget-server -p 80:80 \
+           -e NUGET_API_KEY=<your secret> simple-nuget-server
 ```
 
 Note that some NuGet clients might be picky about the port, so be sure to have your feed available on either port `80` or `443`, e.g. by having a reverse proxy in front on the container.
