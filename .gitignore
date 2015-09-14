@@ -2,3 +2,4 @@
 NuGetAPIKey
 *.bak
 run.sh
+nginx.conf.example
