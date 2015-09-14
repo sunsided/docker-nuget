@@ -79,6 +79,31 @@ This will create or update the `apikeys` section of your configuration file. Mak
 
 In both cases, if you omit the `-ConfigFile <file>` option, your user configuration file will be used.
 
+## Apache example configuration
+
+The following configuration sets up passwordless access from the local network `192.168.0.0/24` as well as the Docker network `172.17.42.0/24` and requires
+basic authentication from the outside world.
+
+```
+<Location /nuget/>
+	Require all denied
+	Require local
+	Require ip 192.168.0.0/24
+	Require ip 172.17.42.0/24
+
+	AuthType Basic
+	AuthName "NuGet Feed"
+	AuthBasicProvider file
+	AuthUserFile "/srv/docker/nuget/auth-file"
+	Require valid-user
+
+	RequestHeader set X-Forwarded-Proto "https"
+	ProxyPass http://127.0.0.1:16473/nuget/
+	ProxyPassReverse http://127.0.0.1:16473/nuget/
+</Location>
+
+```
+
 ## License
 
 This project is licensed under the MIT license. See the `LICENSE` file for more information.
