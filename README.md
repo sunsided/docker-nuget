@@ -1,8 +1,10 @@
-# Docker NuGet Feed v0.3
+# Docker NuGet Feed v0.3.1
 
 This project provides a NuGet feed based on the [simple-nuget-server](https://github.com/Daniel15/simple-nuget-server/) project. It runs on top of the official [nginx](https://github.com/docker-library/docs/tree/master/nginx) image and uses [HHVM](http://hhvm.com) for PHP execution. [Supervisor](http://supervisord.org) is used for tracking the processes.
 
 The corresponding docker image is `sunside/simple-nuget-server` and can be found [here](https://hub.docker.com/r/sunside/simple-nuget-server/).
+
+NuGet packages currently are allowed to have a maximum size of 20 MB on upload.
 
 ## Quickstart
 
