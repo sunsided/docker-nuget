@@ -1,8 +1,10 @@
-# Docker NuGet Feed v0.3
+# Docker NuGet Feed v0.3.1
 
 This project provides a NuGet feed based on the [simple-nuget-server](https://github.com/Daniel15/simple-nuget-server/) project. It runs on top of the official [nginx](https://github.com/docker-library/docs/tree/master/nginx) image and uses [HHVM](http://hhvm.com) for PHP execution. [Supervisor](http://supervisord.org) is used for tracking the processes.
 
 The corresponding docker image is `sunside/simple-nuget-server` and can be found [here](https://hub.docker.com/r/sunside/simple-nuget-server/).
+
+NuGet packages currently are allowed to have a maximum size of 20 MB on upload.
 
 ## Quickstart
 
@@ -78,6 +80,31 @@ nuget setapikey -Source http://url.to/your/feed/ -ConfigFile NuGet.config
 This will create or update the `apikeys` section of your configuration file. Make sure to not check anything sensitive into source control.
 
 In both cases, if you omit the `-ConfigFile <file>` option, your user configuration file will be used.
+
+## Apache example configuration
+
+The following configuration sets up passwordless access from the local network `192.168.0.0/24` as well as the Docker network `172.17.42.0/24` and requires
+basic authentication from the outside world.
+
+```
+<Location /nuget/>
+	Require all denied
+	Require local
+	Require ip 192.168.0.0/24
+	Require ip 172.17.42.0/24
+
+	AuthType Basic
+	AuthName "NuGet Feed"
+	AuthBasicProvider file
+	AuthUserFile "/srv/docker/nuget/auth-file"
+	Require valid-user
+
+	RequestHeader set X-Forwarded-Proto "https"
+	ProxyPass http://127.0.0.1:16473/nuget/
+	ProxyPassReverse http://127.0.0.1:16473/nuget/
+</Location>
+
+```
 
 ## License
 

@@ -14,7 +14,7 @@ RUN apt-key adv --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 0x5a16e728
 	                                      php5-mysql php5-sqlite \
                                               supervisor
 
-# Install git and clone the project
+# Copy in the project
 RUN rm -rf $APP_BASE
 COPY server $APP_BASE
 RUN rm -rf $APP_BASE/.git && \
@@ -24,6 +24,11 @@ RUN rm -rf $APP_BASE/.git && \
 # Activate the nginx configuration
 RUN rm /etc/nginx/conf.d/default*.conf
 COPY conf/nuget.conf /etc/nginx/conf.d/ 
+
+# Configure file sizes
+RUN echo "post_max_size = 20M" >> /etc/hhvm/php.ini && \
+    echo "upload_max_filesize = 20M" >> /etc/hhvm/php.ini && \
+    perl -pi -e 's/^(\s*)(root.+?;)/\1\2\n\1client_max_body_size 20M;/' /etc/nginx/conf.d/nuget.conf
 
 # Install the supervisor configuration
 COPY conf/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
