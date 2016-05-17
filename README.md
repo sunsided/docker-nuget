@@ -1,4 +1,4 @@
-# Docker NuGet Feed v0.4.1
+# Docker NuGet Feed v0.5
 
 This project provides a NuGet feed based on the [simple-nuget-server](https://github.com/Daniel15/simple-nuget-server/) project. It runs on top of the official [nginx](https://github.com/docker-library/docs/tree/master/nginx) image and uses [HHVM](http://hhvm.com) for PHP execution. [Supervisor](http://supervisord.org) is used for tracking the processes.
 
