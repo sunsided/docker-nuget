@@ -62,7 +62,19 @@ Note that some NuGet clients might be picky about the port, so be sure to have y
 In order to push a package to your new NuGet feed, use the following command:
 
 ```bash
-nuget push -src http://url.to/your/feed/ -ApiKey <your secret> path/to/package.nupkg
+nuget push -Source http://url.to/your/feed/ -ApiKey <your secret> path/to/package.nupkg
+```
+
+Deleting package version `<Version>` of package `<Package>` is done using
+
+```bash
+nuget delete -Source http://url.to/your/feed/ -ApiKey <your secret> <Package> <Version>
+```
+
+Listing packages including prereleases can be done using
+
+```bash
+nuget list -Source http://url.to/your/feed/ -Prerelease
 ```
 
 You can add your feed to a specific `NuGet.config` file using:
