@@ -50,6 +50,7 @@ Note that some NuGet clients might be picky about the port, so be sure to have y
 
 * `NUGET_API_KEY` sets the NuGet feed's API key to your own private key
 * `BASE_URL` sets the base path of the feed, e.g. `/nuget` if it is available under `http://your.tld/nuget/`
+* `UPLOAD_MAX_FILESIZE` (optional) sets the maximum allowed filesize when uploading NuGet packages via API. Default is 20M.
 
 ### Exported volumes
 
